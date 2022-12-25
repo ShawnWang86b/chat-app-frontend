@@ -41,3 +41,5 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 2. UI Library: Chakra UI
 3. Router: React-router-dom@5
 4. Data fetch tool : Axios
+
+Google font Poppins, Light 300
