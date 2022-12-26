@@ -5,8 +5,11 @@ import {
   Input,
   Button,
 } from "@chakra-ui/react";
+import { useState } from "react";
 
 const Login = () => {
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
   return (
     <VStack spacing="1em">
       <FormControl id="email" isRequired>
@@ -17,7 +20,7 @@ const Login = () => {
         <FormLabel>Password</FormLabel>
         <Input placeholder="Enter Password" />
       </FormControl>
-      <Button width="100%" colorScheme="linkedin">
+      <Button width="100%" loadingText="Loading">
         Login
       </Button>
     </VStack>

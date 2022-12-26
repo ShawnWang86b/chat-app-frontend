@@ -21,7 +21,7 @@ const HomePage = () => {
         </Text>
       </Box>
       <Box width="100%">
-        <Tabs variant="soft-rounded" colorScheme="purple">
+        <Tabs variant="soft-rounded">
           <TabList marginBottom="1em">
             <Tab width="50%">Login</Tab>
             <Tab width="50%">Sign Up</Tab>
