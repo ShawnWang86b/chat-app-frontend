@@ -39,7 +39,6 @@ const HomePage = () => {
           </TabList>
           <TabPanels>
             <TabPanel>
-              {console.log("tes")}
               <Login />
             </TabPanel>
             <TabPanel>
