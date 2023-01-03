@@ -1,6 +1,6 @@
 import { Stack, Skeleton } from "@chakra-ui/react";
 
-const UserDrawerLoading = () => {
+const ChatsLoading = () => {
   return (
     <Stack>
       <Skeleton height="45px" />
@@ -17,4 +17,4 @@ const UserDrawerLoading = () => {
   );
 };
 
-export default UserDrawerLoading;
+export default ChatsLoading;

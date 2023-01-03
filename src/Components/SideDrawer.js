@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   Tooltip,
@@ -25,7 +25,7 @@ import { SearchIcon, ChevronDownIcon, BellIcon } from "@chakra-ui/icons";
 import { ChatState } from "../Context/ChatProvider";
 import ProfileModal from "../Components/ProfileModal";
 import { useHistory } from "react-router-dom";
-import UserDrawerLoading from "../Components/UserDrawerLoading";
+import ChatsLoading from "./ChatsLoading";
 import UserListItem from "../Components/UserListItem";
 import axios from "axios";
 
@@ -37,6 +37,7 @@ const SideDrawer = () => {
   const history = useHistory();
   const { selectedChat, setSelectedChat, user, setUser, chats, setChats } =
     ChatState();
+
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   //Logout
@@ -93,13 +94,16 @@ const SideDrawer = () => {
       };
       const { data } = await axios.post(`/api/chat`, { userId }, config);
 
+      if (!chats.find((c) => c._id === data._id)) {
+        setChats([data, ...chats]);
+      }
       setSelectedChat(data);
       setLoadingChat(false);
       onClose();
     } catch (error) {
       toast({
         title: "Error Occured!",
-        description: "Failed to Load the chat Results",
+        description: error.message,
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -172,7 +176,7 @@ const SideDrawer = () => {
               <Button onClick={handleSearchClick}>Go</Button>
             </Box>
             {loading ? (
-              <UserDrawerLoading />
+              <ChatsLoading />
             ) : (
               searchResult?.map((user) => (
                 <UserListItem
