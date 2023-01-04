@@ -4,6 +4,7 @@ import axios from "axios";
 import { ChatState } from "../Context/ChatProvider";
 import { AddIcon } from "@chakra-ui/icons";
 import ChatsLoading from "./ChatsLoading";
+import GroupChatModal from "./GroupChatModal";
 
 const MyChats = () => {
   const { selectedChat, setSelectedChat, user, setUser, chats, setChats } =
@@ -36,7 +37,9 @@ const MyChats = () => {
     fetchChats();
   }, []);
 
-  const getSender = (loggedUser, users) => {};
+  const getSender = (loggedUser, users) => {
+    return users[0]._id === loggedUser._id ? users[1].name : users[0].name;
+  };
   return (
     <Box
       display="flex"
@@ -59,10 +62,28 @@ const MyChats = () => {
         fontSize={{ base: "28px", md: "30px" }}
       >
         My Chat
-        <Button rightIcon={<AddIcon />}>New Group Chat</Button>
+        <GroupChatModal>
+          <Button
+            bg="blue.400"
+            color="#fff"
+            fontFamily="Poppin"
+            rightIcon={<AddIcon />}
+            _hover={{ bg: "blue.600" }}
+          >
+            New Group Chat
+          </Button>
+        </GroupChatModal>
       </Box>
       {/* render all chats */}
-      <Box display="flex" flexDirection="column" w="100%" h="100%" padding={3}>
+      <Box
+        display="flex"
+        flexDirection="column"
+        w="100%"
+        h="100%"
+        padding={3}
+        fontFamily="Poppin"
+        fontSize="xl"
+      >
         {chats ? (
           <Stack overflowY="scroll">
             {chats.map((chat) => (
@@ -70,6 +91,13 @@ const MyChats = () => {
                 onClick={() => setSelectedChat(chat)}
                 key={chat._id}
                 cursor="pointer"
+                bg={selectedChat === chat ? "blue.400" : "#fff"}
+                color={selectedChat === chat ? "white" : "black"}
+                px={3}
+                py={2}
+                borderRadius="lg"
+                border="1px"
+                borderColor="gray.200"
               >
                 <Text>
                   {!chat.isGroupChat

@@ -4,3 +4,11 @@
   min-height: 100vh;
   background-color: #f3eee7;
 }
+
+//remove scroll bar
+* {
+  -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+  display: none;
+}
