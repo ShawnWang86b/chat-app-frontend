@@ -7,6 +7,7 @@ import {
   ModalBody,
   ModalCloseButton,
   Input,
+  Flex,
   Button,
   FormLabel,
   FormControl,
@@ -145,13 +146,15 @@ const GroupChatModal = ({ children }) => {
               />
             </FormControl>
             {/* here to render selected user badge */}
-            {selectedUsers.map((user) => (
-              <UserBadge
-                user={user}
-                handleFunction={() => handleDeleteUser(user)}
-                key={user._id}
-              />
-            ))}
+            <Flex gridGap={2}>
+              {selectedUsers.map((user) => (
+                <UserBadge
+                  user={user}
+                  handleFunction={() => handleDeleteUser(user)}
+                  key={user._id}
+                />
+              ))}
+            </Flex>
 
             {/* here to render searched users */}
             {loading ? (

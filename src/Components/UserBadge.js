@@ -4,9 +4,10 @@ import { CloseIcon } from "@chakra-ui/icons";
 const UserBadge = ({ user, handleFunction }) => {
   return (
     <Box
-      display="flex"
-      alignItems="center"
+      as="span"
+      display="inline-flex"
       bg="blue.400"
+      alignItems="center"
       color="#FFF"
       my={2}
       px={2}
