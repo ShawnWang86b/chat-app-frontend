@@ -67,7 +67,6 @@ const Login = () => {
         position: "bottom",
       });
       setLoading(false);
-      return;
     }
   };
   return (

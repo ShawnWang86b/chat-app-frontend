@@ -37,7 +37,7 @@ const MyChats = ({ fetchAgain }) => {
     fetchChats();
   }, [fetchAgain]);
 
-  const getSender = (loggedUser, users) => {
+  const getSenderName = (loggedUser, users) => {
     return users[0]._id === loggedUser._id ? users[1].name : users[0].name;
   };
   return (
@@ -101,7 +101,7 @@ const MyChats = ({ fetchAgain }) => {
               >
                 <Text>
                   {!chat.isGroupChat
-                    ? getSender(loggedUser, chat.users)
+                    ? getSenderName(loggedUser, chat.users)
                     : chat.chatName}
                 </Text>
               </Box>
