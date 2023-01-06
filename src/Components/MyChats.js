@@ -5,7 +5,7 @@ import { ChatState } from "../Context/ChatProvider";
 import { AddIcon } from "@chakra-ui/icons";
 import ChatsLoading from "./ChatsLoading";
 import GroupChatModal from "./GroupChatModal";
-
+import { getSender } from "../config/ChatLogics";
 const MyChats = ({ fetchAgain }) => {
   const { selectedChat, setSelectedChat, user, setUser, chats, setChats } =
     ChatState();
@@ -37,9 +37,9 @@ const MyChats = ({ fetchAgain }) => {
     fetchChats();
   }, [fetchAgain]);
 
-  const getSenderName = (loggedUser, users) => {
-    return users[0]._id === loggedUser._id ? users[1].name : users[0].name;
-  };
+  // const getSenderName = (loggedUser, users) => {
+  //   return users[0]._id === loggedUser._id ? users[1].name : users[0].name;
+  // };
   return (
     <Box
       display={{ base: selectedChat ? "none" : "flex", md: "flex" }}
@@ -101,7 +101,7 @@ const MyChats = ({ fetchAgain }) => {
               >
                 <Text>
                   {!chat.isGroupChat
-                    ? getSenderName(loggedUser, chat.users)
+                    ? getSender(loggedUser, chat.users)
                     : chat.chatName}
                 </Text>
               </Box>
