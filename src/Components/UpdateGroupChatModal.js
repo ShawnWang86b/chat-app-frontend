@@ -23,7 +23,7 @@ import UserBadge from "../Components/UserBadge";
 import UserListItem from "./UserListItem";
 import axios from "axios";
 
-const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
+const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
   const { selectedChat, setSelectedChat, user } = ChatState();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [groupChatName, setGroupChatName] = useState();
@@ -133,6 +133,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
       const { data } = axios.put("/api/chat/groupremove", postData, config);
       deleteUser._id === user._id ? setSelectedChat() : setSelectedChat(data);
       setFetchAgain(!fetchAgain);
+      fetchMessages();
       setLoading(false);
     } catch (error) {
       toast({
