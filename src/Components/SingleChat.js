@@ -15,9 +15,9 @@ import ProfileModal from "./ProfileModal";
 import axios from "axios";
 import ScrollableChat from "./ScrollableChat";
 import { io } from "socket.io-client";
-import Lottie from "react-lottie";
-import animationData from "../animations/typing.json";
+import typingAnimation from "../animations/typing.json";
 import { getSender, getSenderFull } from "../config/ChatLogics";
+import { useLottie } from "lottie-react";
 
 const ENDPOINT = "http://localhost:5000";
 let socket, selectedChatCompare;
@@ -34,14 +34,13 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const toast = useToast();
   //socket io
 
-  const defaultOptions = {
-    loop: true,
+  const options = {
+    animationData: typingAnimation,
     autoplay: true,
-    animationData: animationData,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
+    loop: true,
   };
+  const { View } = useLottie(options);
+
   useEffect(() => {
     socket = io(ENDPOINT);
     socket.emit("setup", user);
@@ -214,18 +213,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             )}
 
             <FormControl onKeyDown={sendMessage} isRequired>
-              {istyping ? (
-                <div>
-                  <Lottie
-                    options={defaultOptions}
-                    // height={50}
-                    width={70}
-                    style={{ marginBottom: 15, marginLeft: 0 }}
-                  />
-                </div>
-              ) : (
-                <></>
-              )}
+              {istyping ? <div>Typing Message ... </div> : <></>}
               <Input
                 variant="filled"
                 bg="#E0E0E0"

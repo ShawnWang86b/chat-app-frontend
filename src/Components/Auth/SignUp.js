@@ -50,10 +50,13 @@ const SignUp = () => {
       data.append("file", avatar);
       data.append("upload_preset", "chat-app");
       data.append("cloud_name", "dmfmwtxje");
-      fetch("https://api.cloudinary.com/v1_1/dmfmwtxje/image/upload", {
-        method: "post",
-        body: data,
-      })
+      fetch(
+        `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload`,
+        {
+          method: "post",
+          body: data,
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           setAvatar(data.url.toString());
