@@ -127,7 +127,7 @@ const SignUp = () => {
       });
       localStorage.setItem("userInfo", JSON.stringify(data));
       setAvatarLoading(false);
-      history.push("/ChatPage");
+      history.push("/chats");
     } catch (error) {
       toast({
         title: "Error Occurred",
