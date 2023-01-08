@@ -19,7 +19,8 @@ import typingAnimation from "../animations/typing.json";
 import { getSender, getSenderFull } from "../config/ChatLogics";
 import { useLottie } from "lottie-react";
 
-const ENDPOINT = "http://localhost:5000";
+//const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = "https://chat-app-9yo2.onrender.com";
 let socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
