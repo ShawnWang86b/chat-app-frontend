@@ -117,7 +117,7 @@ const SignUp = () => {
         },
       };
       const { data } = await axios.post(
-        "/api/user",
+        "https://chat-app-9yo2.onrender.com/api/user",
         { name, email, password, avatar },
         config
       );

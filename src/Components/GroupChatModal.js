@@ -42,7 +42,10 @@ const GroupChatModal = ({ children }) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get(`/api/user?search=${query}`, config);
+      const { data } = await axios.get(
+        `https://chat-app-9yo2.onrender.com/api/user?search=${query}`,
+        config
+      );
       setLoading(false);
       setSearchResult(data);
     } catch (error) {
@@ -99,7 +102,11 @@ const GroupChatModal = ({ children }) => {
         name: groupChatName,
         users: JSON.stringify(selectedUsers),
       };
-      const { data } = await axios.post("/api/chat/group", createGroup, config);
+      const { data } = await axios.post(
+        "https://chat-app-9yo2.onrender.com/api/chat/group",
+        createGroup,
+        config
+      );
       setChats([data, ...chats]);
       setLoading(false);
       onClose();

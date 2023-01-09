@@ -1,6 +1,7 @@
 ### Description
 
-This project is a chat app V1, which includes most of the functionalities of modern instance chat app, e.g. wechat.
+This project is a chat app V1, which includes most of the functionalities of modern instance chat app, e.g. wechat.\
+[project demo](https://chat-app-frontend-2plb.onrender.com)
 
 ### Main Features
 
