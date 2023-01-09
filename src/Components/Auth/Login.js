@@ -8,7 +8,7 @@ import {
   InputGroup,
   InputRightElement,
 } from "@chakra-ui/react";
-import axios from "axios";
+import axios from "../../config/axios";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ChatState } from "../../Context/ChatProvider";

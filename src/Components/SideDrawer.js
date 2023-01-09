@@ -27,7 +27,7 @@ import ProfileModal from "../Components/ProfileModal";
 import { useHistory } from "react-router-dom";
 import ChatsLoading from "./ChatsLoading";
 import UserListItem from "../Components/UserListItem";
-import axios from "axios";
+import axios from "../config/axios";
 import { getSender } from "../../src/config/ChatLogics";
 
 const SideDrawer = () => {

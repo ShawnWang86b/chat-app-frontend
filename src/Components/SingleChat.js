@@ -12,7 +12,7 @@ import { ChatState } from "../Context/ChatProvider";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import UpdateGroupChatModal from "../Components/UpdateGroupChatModal";
 import ProfileModal from "./ProfileModal";
-import axios from "axios";
+import axios from "../config/axios";
 import ScrollableChat from "./ScrollableChat";
 import { io } from "socket.io-client";
 import typingAnimation from "../animations/typing.json";

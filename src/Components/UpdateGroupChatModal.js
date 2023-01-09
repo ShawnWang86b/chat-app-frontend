@@ -21,7 +21,7 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 import { ChatState } from "../Context/ChatProvider";
 import UserBadge from "../Components/UserBadge";
 import UserListItem from "./UserListItem";
-import axios from "axios";
+import axios from "../config/axios";
 
 const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
   const { selectedChat, setSelectedChat, user } = ChatState();
