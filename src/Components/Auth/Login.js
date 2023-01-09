@@ -11,7 +11,7 @@ import {
 import axios from "axios";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-//import { ChatState } from "../../Context/ChatProvider";
+import { ChatState } from "../../Context/ChatProvider";
 
 const Login = () => {
   const [email, setEmail] = useState();
@@ -21,7 +21,7 @@ const Login = () => {
   const toast = useToast();
   const history = useHistory();
 
-  //const { setUser } = ChatState();
+  const { setUser } = ChatState();
 
   const handlePasswordShowClick = () => {
     setPasswordShow(!passwordShow);
@@ -47,7 +47,7 @@ const Login = () => {
         },
       };
       const { data } = await axios.post(
-        "https://chat-app-9yo2.onrender.com/api/user/login",
+        "/api/user/login",
         { email, password },
         config
       );
@@ -59,8 +59,7 @@ const Login = () => {
         position: "bottom",
       });
       localStorage.setItem("userInfo", JSON.stringify(data));
-      //const userInfo = JSON.parse(localStorage.getItem("userInfo")); //store the data from localstorage
-      //setUser(userInfo);
+      setUser(data);
       setLoading(false);
       history.push("/chats");
     } catch (error) {

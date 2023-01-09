@@ -46,10 +46,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get(
-        `https://chat-app-9yo2.onrender.com/api/user?search=${search}`,
-        config
-      );
+      const { data } = await axios.get(`/api/user?search=${search}`, config);
       console.log(data);
       setLoading(false);
       setSearchResult(data);
@@ -89,11 +86,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
         userId: addUser._id,
       };
 
-      const { data } = axios.put(
-        "https://chat-app-9yo2.onrender.com/api/chat/groupadd",
-        postData,
-        config
-      );
+      const { data } = axios.put("/api/chat/groupadd", postData, config);
       setSelectedChat(data);
       setFetchAgain(!fetchAgain);
       setLoading(false);
@@ -137,11 +130,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
         userId: deleteUser._id,
       };
 
-      const { data } = axios.put(
-        "https://chat-app-9yo2.onrender.com/api/chat/groupremove",
-        postData,
-        config
-      );
+      const { data } = axios.put("/api/chat/groupremove", postData, config);
       deleteUser._id === user._id ? setSelectedChat() : setSelectedChat(data);
       setFetchAgain(!fetchAgain);
       fetchMessages();
@@ -185,11 +174,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
         chatName: groupChatName,
       };
 
-      const { data } = await axios.put(
-        "https://chat-app-9yo2.onrender.com/api/chat/rename",
-        postData,
-        config
-      );
+      const { data } = await axios.put("/api/chat/rename", postData, config);
       setSelectedChat(data);
       setFetchAgain(!fetchAgain);
       setRenameLoading(false);
