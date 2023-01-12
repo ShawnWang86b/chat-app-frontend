@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import {
   Box,
+  Stack,
   Container,
   Text,
   Tab,
@@ -10,7 +11,7 @@ import {
   TabPanel,
 } from "@chakra-ui/react";
 import Login from "../Components/Auth/Login";
-import SignUp from "../Components/Auth/SignUp";
+import Register from "../Components/Auth/Register.tsx";
 import { useHistory } from "react-router";
 
 const HomePage = () => {
@@ -42,7 +43,7 @@ const HomePage = () => {
               <Login />
             </TabPanel>
             <TabPanel>
-              <SignUp />
+              <Register />
             </TabPanel>
           </TabPanels>
         </Tabs>

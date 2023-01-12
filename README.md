@@ -77,3 +77,15 @@ export default instance;
 7. add a read and unread mark for every message, actually not necessary just for learning purpose.
 8. users may have a button to check all media file, for example, others send image and file.
 9. add dark and light theme
+
+### What have done so far
+
+**Global**
+
+1. installed ts, jest, react-test-library.\
+
+**Auth-SignUp**\
+
+1. add Regex for register input
+2. add Ref, tip when focus the input
+3. add feedback icon x,✓ when input

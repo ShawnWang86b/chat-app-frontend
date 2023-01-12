@@ -1,3 +1,5 @@
+import React from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   VStack,
   FormControl,
@@ -9,20 +11,61 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import axios from "../../config/axios";
-import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import {
+  USER_REGEX,
+  PWD_REGEX,
+  EMAIL_REGEX,
+  REGISTER_URL,
+} from "../../constants/register";
 
-const SignUp = () => {
+const Register = () => {
+  const nameRef = useRef<HTMLInputElement | null>(null);
+
   const [passwordShow, setPasswordShow] = useState(false);
   const [passwordConfirmShow, setPasswordConfirmShow] = useState(false);
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [confirmPassword, setConfirmPassword] = useState();
-  const [avatar, setAvatar] = useState();
+
+  //Name
+  const [name, setName] = useState("");
+  const [validName, setValidName] = useState(false);
+  const [nameFocus, setNameFocus] = useState(false);
+
+  //Email
+  const [email, setEmail] = useState("");
+  const [validEmail, setValidEmail] = useState(false);
+  const [emailFocus, setEmailFocus] = useState(false);
+
+  //Password
+  const [password, setPassword] = useState("");
+  const [validPassword, setValidPassword] = useState(false);
+  const [passwordFocus, setPasswordFocus] = useState(false);
+
+  //Match Password
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [validMatch, setValidMatch] = useState(false);
+  const [confirmPasswordFocus, setConfirmPasswordFocus] = useState(false);
+
+  //Avatar
+  const [avatar, setAvatar] = useState("");
   const [avatarLoading, setAvatarLoading] = useState(false);
+
   const toast = useToast();
   const history = useHistory();
+
+  useEffect(() => {
+    nameRef.current?.focus();
+    console.log(nameRef.current);
+  }, []);
+
+  useEffect(() => {
+    setValidName(USER_REGEX.test(name));
+    console.log("validName", validName);
+  }, [name]);
+
+  useEffect(() => {
+    setValidEmail(EMAIL_REGEX.test(email));
+    console.log("email", email);
+  }, [email]);
 
   const handlePasswordShowClick = () => {
     setPasswordShow(!passwordShow);
@@ -80,7 +123,7 @@ const SignUp = () => {
     }
   };
 
-  const handleSubmitClick = async () => {
+  const handleSubmit = async () => {
     setAvatarLoading(true);
     if (!name || !email || !password || !confirmPassword) {
       toast({
@@ -146,10 +189,12 @@ const SignUp = () => {
   };
   return (
     <VStack spacing="1em">
+      {console.log("renderTime", 1)}
       <FormControl id="name" isRequired>
         <FormLabel>Name</FormLabel>
         <Input
           placeholder="Enter Your Name"
+          ref={nameRef}
           onChange={(e) => {
             setName(e.target.value);
           }}
@@ -215,7 +260,7 @@ const SignUp = () => {
         width="100%"
         isLoading={avatarLoading}
         loadingText="Loading"
-        onClick={handleSubmitClick}
+        onClick={handleSubmit}
       >
         Sign Up
       </Button>
@@ -223,4 +268,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Register;
