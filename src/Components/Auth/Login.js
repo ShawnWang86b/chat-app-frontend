@@ -1,9 +1,11 @@
 import {
   VStack,
   FormControl,
-  FormLabel,
   Input,
+  Box,
+  Text,
   Button,
+  Checkbox,
   useToast,
   InputGroup,
   InputRightElement,
@@ -12,7 +14,7 @@ import axios from "../../config/axios";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ChatState } from "../../Context/ChatProvider";
-
+import { ReactComponent as GoogleIcon } from "../../assets/google.svg";
 const Login = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -75,11 +77,16 @@ const Login = () => {
     }
   };
   return (
-    <VStack spacing="1em">
+    <VStack spacing="1em" width="60%">
+      <Text fontSize="3xl" as="b">
+        Welcome back
+      </Text>
+
       <FormControl id="email" isRequired>
-        <FormLabel>Email Address</FormLabel>
         <Input
-          placeholder="Enter Your Email Address"
+          placeholder="Enter your email address"
+          border="2px"
+          borderColor="#000"
           onChange={(e) => {
             setEmail(e.target.value);
           }}
@@ -87,11 +94,12 @@ const Login = () => {
       </FormControl>
 
       <FormControl id="password" isRequired>
-        <FormLabel>Password</FormLabel>
         <InputGroup size="md">
           <Input
             type={passwordShow ? "text" : "password"}
-            placeholder="Enter Password"
+            border="2px"
+            borderColor="#000"
+            placeholder="Enter password"
             onChange={(e) => {
               setPassword(e.target.value);
             }}
@@ -104,14 +112,45 @@ const Login = () => {
         </InputGroup>
       </FormControl>
 
+      <Box display="flex" justifyContent="space-between">
+        <Checkbox defaultChecked colorScheme="red">
+          <Text fontSize="sm">Remember me</Text>
+        </Checkbox>
+
+        <Text fontSize="sm">Forgot password</Text>
+      </Box>
+
       <Button
         width="100%"
         isLoading={loading}
         loadingText="Loading"
+        backgroundColor="#000"
+        color="#fff"
         onClick={handleSubmitClick}
       >
-        Login
+        Sign in
       </Button>
+      <Button
+        width="100%"
+        isLoading={loading}
+        loadingText="Loading"
+        backgroundColor="#fff"
+        onClick={handleSubmitClick}
+        border="2px"
+        borderColor="#000"
+        leftIcon={<GoogleIcon />}
+      >
+        Sign in with Google
+      </Button>
+
+      <Box display="flex">
+        <Text fontSize="sm" marginRight={1}>
+          Don't have an account?
+        </Text>
+        <Text fontSize="sm" cursor="pointer" as="ins">
+          Sign up
+        </Text>
+      </Box>
     </VStack>
   );
 };

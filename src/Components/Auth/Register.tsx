@@ -1,6 +1,9 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import {
+  Text,
+  Box,
+  Flex,
   VStack,
   FormControl,
   FormLabel,
@@ -12,12 +15,13 @@ import {
 } from "@chakra-ui/react";
 import axios from "../../config/axios";
 import { useHistory } from "react-router-dom";
-import {
-  USER_REGEX,
-  PWD_REGEX,
-  EMAIL_REGEX,
-  REGISTER_URL,
-} from "../../constants/register";
+import { InfoIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
+
+export const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
+export const PWD_REGEX =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+export const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+export const REGISTER_URL = "/api/user";
 
 const Register = () => {
   const nameRef = useRef<HTMLInputElement | null>(null);
@@ -54,18 +58,20 @@ const Register = () => {
 
   useEffect(() => {
     nameRef.current?.focus();
-    console.log(nameRef.current);
   }, []);
 
   useEffect(() => {
     setValidName(USER_REGEX.test(name));
-    console.log("validName", validName);
   }, [name]);
 
   useEffect(() => {
     setValidEmail(EMAIL_REGEX.test(email));
-    console.log("email", email);
   }, [email]);
+
+  useEffect(() => {
+    setValidPassword(PWD_REGEX.test(password));
+    setValidMatch(password === confirmPassword);
+  }, [password, confirmPassword]);
 
   const handlePasswordShowClick = () => {
     setPasswordShow(!passwordShow);
@@ -103,7 +109,6 @@ const Register = () => {
         .then((res) => res.json())
         .then((data) => {
           setAvatar(data.url.toString());
-          console.log(data);
           setAvatarLoading(false);
         })
         .catch((err) => {
@@ -133,10 +138,6 @@ const Register = () => {
         isClosable: true,
         position: "bottom",
       });
-      console.log("name", name);
-      console.log("email", email);
-      console.log("password", password);
-      console.log("confirmPassword", confirmPassword);
       setAvatarLoading(false);
       return;
     }
@@ -187,18 +188,45 @@ const Register = () => {
       return;
     }
   };
+
   return (
     <VStack spacing="1em">
-      {console.log("renderTime", 1)}
       <FormControl id="name" isRequired>
-        <FormLabel>Name</FormLabel>
+        <Box display="flex" alignItems="center">
+          <FormLabel fontSize="xl">Name</FormLabel>
+          {name &&
+            (validName ? (
+              <CheckIcon color="green.500" paddingBottom={2} fontSize="2xl" />
+            ) : (
+              <CloseIcon color="red.500" paddingBottom={2} fontSize="2xl" />
+            ))}
+        </Box>
         <Input
           placeholder="Enter Your Name"
           ref={nameRef}
           onChange={(e) => {
             setName(e.target.value);
           }}
+          onFocus={() => setNameFocus(true)}
+          onBlur={() => setNameFocus(false)}
         />
+        {nameFocus && (
+          <Box
+            display="flex"
+            padding={1}
+            marginTop={3}
+            backgroundColor="blue.100"
+            fontSize="xl"
+            borderRadius="md"
+          >
+            <InfoIcon marginTop={1} marginRight={2} marginLeft={1} />
+            <Text fontFamily="Poppin">
+              4 to 24 characters.
+              <br /> Must begin with a letter.
+              <br /> Letters, numbers, underscores, hyphens allowed.
+            </Text>
+          </Box>
+        )}
       </FormControl>
       <FormControl id="email" isRequired>
         <FormLabel>Email Address</FormLabel>
@@ -207,7 +235,22 @@ const Register = () => {
           onChange={(e) => {
             setEmail(e.target.value);
           }}
+          onFocus={() => setEmailFocus(true)}
+          onBlur={() => setEmailFocus(false)}
         />
+        {emailFocus && (
+          <Box
+            display="flex"
+            padding={1}
+            marginTop={3}
+            backgroundColor="blue.100"
+            fontSize="xl"
+            borderRadius="md"
+          >
+            <InfoIcon marginTop={1} marginRight={2} marginLeft={1} />
+            <Text fontFamily="Poppin">Must a valid email address.</Text>
+          </Box>
+        )}
       </FormControl>
 
       <FormControl id="password" isRequired>
@@ -219,6 +262,8 @@ const Register = () => {
             onChange={(e) => {
               setPassword(e.target.value);
             }}
+            onFocus={() => setPasswordFocus(true)}
+            onBlur={() => setPasswordFocus(false)}
           />
           <InputRightElement width="4.5rem">
             <Button h="1.75rem" size="sm" onClick={handlePasswordShowClick}>
@@ -226,6 +271,26 @@ const Register = () => {
             </Button>
           </InputRightElement>
         </InputGroup>
+        {passwordFocus && (
+          <Box
+            display="flex"
+            padding={1}
+            marginTop={3}
+            backgroundColor="blue.100"
+            fontSize="xl"
+            borderRadius="md"
+          >
+            <InfoIcon marginTop={1} marginRight={2} marginLeft={1} />
+            <Text fontFamily="Poppin">
+              8 to 24 characters.
+              <br />
+              Must include uppercase and lowercase letters, a number and a
+              special character.
+              <br />
+              Allowed special characters:!@#$%
+            </Text>
+          </Box>
+        )}
       </FormControl>
 
       <FormControl id="confirm-password" isRequired>
@@ -237,6 +302,8 @@ const Register = () => {
             onChange={(e) => {
               setConfirmPassword(e.target.value);
             }}
+            onFocus={() => setConfirmPasswordFocus(true)}
+            onBlur={() => setConfirmPasswordFocus(false)}
           />
           <InputRightElement width="4.5rem">
             <Button size="sm" onClick={handlePasswordConfirmShowClick}>
@@ -244,6 +311,21 @@ const Register = () => {
             </Button>
           </InputRightElement>
         </InputGroup>
+        {confirmPasswordFocus && (
+          <Box
+            display="flex"
+            padding={1}
+            marginTop={3}
+            backgroundColor="blue.100"
+            fontSize="xl"
+            borderRadius="md"
+          >
+            <InfoIcon marginTop={1} marginRight={2} marginLeft={1} />
+            <Text fontFamily="Poppin">
+              Must match the first password input field.
+            </Text>
+          </Box>
+        )}
       </FormControl>
 
       <FormControl id="avatar">
@@ -261,6 +343,8 @@ const Register = () => {
         isLoading={avatarLoading}
         loadingText="Loading"
         onClick={handleSubmit}
+        backgroundColor="blue.100"
+        disabled={!validName || !validEmail || !validPassword || !validMatch}
       >
         Sign Up
       </Button>

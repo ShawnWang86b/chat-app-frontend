@@ -2,13 +2,17 @@ import React, { useEffect } from "react";
 import {
   Box,
   Stack,
+  Flex,
   Container,
+  Image,
   Text,
   Tab,
   Tabs,
   TabList,
   TabPanels,
   TabPanel,
+  Center,
+  Divider,
 } from "@chakra-ui/react";
 import Login from "../Components/Auth/Login";
 import Register from "../Components/Auth/Register.tsx";
@@ -26,30 +30,30 @@ const HomePage = () => {
   }, [history]);
 
   return (
-    <Container maxW="xl" centerContent backgroundColor="#faf8f4">
-      <Box>
-        <Text fontSize="xl" fontFamily="Poppins" margin="1em">
-          Pet Nanny User Chat Test Project
-        </Text>
+    <Container display="flex" maxW="7xl" height="100%">
+      <Box
+        width="50%"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Login />
       </Box>
-      <Box width="100%">
-        <Tabs variant="soft-rounded">
-          <TabList marginBottom="1em">
-            <Tab width="50%">Login</Tab>
-            <Tab width="50%">Sign Up</Tab>
-          </TabList>
-          <TabPanels>
-            <TabPanel>
-              <Login />
-            </TabPanel>
-            <TabPanel>
-              <Register />
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
+
+      <Box
+        width="50%"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        borderLeft="2px"
+        borderLeftColor="#000"
+      >
+        <Image
+          src="https://res.cloudinary.com/dmfmwtxje/image/upload/v1673607358/colorComposition_v4yeay.jpg"
+          alt="colorComposition"
+        />
       </Box>
     </Container>
   );
 };
-//2113604
 export default HomePage;
