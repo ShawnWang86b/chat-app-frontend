@@ -8,6 +8,7 @@ const ChatProvider = ({ children }) => {
   const [selectedChat, setSelectedChat] = useState();
   const [notification, setNotification] = useState([]);
   const [chats, setChats] = useState();
+  const [currentPage, setCurrentPage] = useState("login");
 
   const history = useHistory();
   useEffect(() => {
@@ -16,6 +17,7 @@ const ChatProvider = ({ children }) => {
 
     if (!userInfo) {
       history.push("/");
+      return;
     }
   }, [history]);
 
@@ -30,6 +32,8 @@ const ChatProvider = ({ children }) => {
         setNotification,
         chats,
         setChats,
+        currentPage,
+        setCurrentPage,
       }}
     >
       {children}

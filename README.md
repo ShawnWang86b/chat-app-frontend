@@ -53,6 +53,13 @@ const instance = axios.create({
 export default instance;
 ```
 
+In the SingleChat.js file, comment the second one, and uncomment the `localhost:5000` one, like this:
+
+```js
+const ENDPOINT = "http://localhost:5000";
+//const ENDPOINT = "https://shawns-chat-app-api.onrender.com";
+```
+
 **Start the program**\
 `npm run start`
 
@@ -68,24 +75,20 @@ export default instance;
 
 **New Features**
 
-1. users can send image (folders if possible), better draggable.
-2. show users state (green point online, red point off line)
-3. chat message need to show send time
-4. video, may use WebRTC
-5. notifications, this should be finished in V1 but failed
-6. find a new library to replace `react-scrollable-feed` and `Lotties-react`.\
-7. add a read and unread mark for every message, actually not necessary just for learning purpose.
-8. users may have a button to check all media file, for example, others send image and file.
-9. add dark and light theme
-
-### What have done so far
-
-**Global**
-
-1. installed ts, jest, react-test-library.\
-
-**Auth-SignUp**\
-
-1. add Regex for register input
-2. add Ref, tip when focus the input
-3. add feedback icon x,✓ when input
+1. [ ] users can send image (folders if possible), better draggable.
+2. [ ] show users state (green point online, red point off line)
+3. [ ] chat message need to show send time
+4. [ ] video, may use WebRTC
+5. [ ] notifications, this should be finished in V1 but failed
+6. [ ] find a new library to replace `react-scrollable-feed` and `Lotties-react`
+7. [ ] add a read and unread mark for every message, actually not necessary just for learning purpose.
+8. [ ] users may have a button to check all media file, for example, others send image and file.
+9. [ ] add dark and light theme
+10. [ ] forgot password, email reset password
+11. [ ] remember me in the sign in page
+12. [ ] sign in, sign up in Google
+13. [✓] sign up helper focus info
+14. [✓] sign in UI design and build
+15. [✓] sign up UI design and build
+16. [✓] add feedback icon x,✓ when input
+17. [✓] add Regex for sign up input

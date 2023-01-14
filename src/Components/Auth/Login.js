@@ -15,15 +15,18 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ChatState } from "../../Context/ChatProvider";
 import { ReactComponent as GoogleIcon } from "../../assets/google.svg";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+
 const Login = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
   const [passwordShow, setPasswordShow] = useState(false);
+
   const toast = useToast();
   const history = useHistory();
 
-  const { setUser } = ChatState();
+  const { setUser, setCurrentPage } = ChatState();
 
   const handlePasswordShowClick = () => {
     setPasswordShow(!passwordShow);
@@ -76,6 +79,7 @@ const Login = () => {
       setLoading(false);
     }
   };
+
   return (
     <VStack spacing="1em" width="60%">
       <Text fontSize="3xl" as="b">
@@ -105,19 +109,25 @@ const Login = () => {
             }}
           />
           <InputRightElement width="4.5rem">
-            <Button size="sm" onClick={handlePasswordShowClick}>
-              {passwordShow ? "Hide" : "Show"}
+            <Button
+              size="sm"
+              backgroundColor="#FFF"
+              onClick={handlePasswordShowClick}
+            >
+              {passwordShow ? <ViewOffIcon /> : <ViewIcon />}
             </Button>
           </InputRightElement>
         </InputGroup>
       </FormControl>
 
-      <Box display="flex" justifyContent="space-between">
+      <Box display="flex" justifyContent="space-between" width="100%">
         <Checkbox defaultChecked colorScheme="red">
           <Text fontSize="sm">Remember me</Text>
         </Checkbox>
 
-        <Text fontSize="sm">Forgot password</Text>
+        <Text fontSize="sm" cursor="pointer">
+          Forgot password
+        </Text>
       </Box>
 
       <Button
@@ -147,7 +157,12 @@ const Login = () => {
         <Text fontSize="sm" marginRight={1}>
           Don't have an account?
         </Text>
-        <Text fontSize="sm" cursor="pointer" as="ins">
+        <Text
+          fontSize="sm"
+          cursor="pointer"
+          as="ins"
+          onClick={() => setCurrentPage("register")}
+        >
           Sign up
         </Text>
       </Box>

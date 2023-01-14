@@ -11,11 +11,20 @@ import {
   Button,
   InputGroup,
   InputRightElement,
+  Tooltip,
   useToast,
 } from "@chakra-ui/react";
 import axios from "../../config/axios";
 import { useHistory } from "react-router-dom";
-import { InfoIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
+import {
+  InfoIcon,
+  CheckIcon,
+  CloseIcon,
+  ViewIcon,
+  ViewOffIcon,
+} from "@chakra-ui/icons";
+import { ReactComponent as GoogleIcon } from "../../assets/google.svg";
+import { ChatState } from "../../Context/ChatProvider";
 
 export const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 export const PWD_REGEX =
@@ -52,7 +61,7 @@ const Register = () => {
   //Avatar
   const [avatar, setAvatar] = useState("");
   const [avatarLoading, setAvatarLoading] = useState(false);
-
+  const { setCurrentPage } = ChatState();
   const toast = useToast();
   const history = useHistory();
 
@@ -190,23 +199,30 @@ const Register = () => {
   };
 
   return (
-    <VStack spacing="1em">
+    <VStack spacing="1em" width="60%">
+      <Text fontSize="3xl" as="b">
+        Create an account
+      </Text>
+      {/* Name */}
       <FormControl id="name" isRequired>
         <Box display="flex" alignItems="center">
-          <FormLabel fontSize="xl">Name</FormLabel>
+          <FormLabel>Name</FormLabel>
           {name &&
             (validName ? (
-              <CheckIcon color="green.500" paddingBottom={2} fontSize="2xl" />
+              <CheckIcon color="green.500" paddingBottom={1} />
             ) : (
-              <CloseIcon color="red.500" paddingBottom={2} fontSize="2xl" />
+              <CloseIcon color="red.500" paddingBottom={1} />
             ))}
         </Box>
+
         <Input
-          placeholder="Enter Your Name"
+          placeholder="Enter your name"
           ref={nameRef}
           onChange={(e) => {
             setName(e.target.value);
           }}
+          border="2px"
+          borderColor="#000"
           onFocus={() => setNameFocus(true)}
           onBlur={() => setNameFocus(false)}
         />
@@ -216,25 +232,37 @@ const Register = () => {
             padding={1}
             marginTop={3}
             backgroundColor="blue.100"
-            fontSize="xl"
             borderRadius="md"
           >
             <InfoIcon marginTop={1} marginRight={2} marginLeft={1} />
-            <Text fontFamily="Poppin">
+            <Text>
               4 to 24 characters.
               <br /> Must begin with a letter.
-              <br /> Letters, numbers, underscores, hyphens allowed.
+              <br /> Letters, numbers, underscores, and hyphens.
             </Text>
           </Box>
         )}
       </FormControl>
+
+      {/* Email */}
       <FormControl id="email" isRequired>
-        <FormLabel>Email Address</FormLabel>
+        <Box display="flex" alignItems="center">
+          <FormLabel>Email address</FormLabel>
+          {email &&
+            (validEmail ? (
+              <CheckIcon color="green.500" paddingBottom={1} />
+            ) : (
+              <CloseIcon color="red.500" paddingBottom={1} />
+            ))}
+        </Box>
+
         <Input
-          placeholder="Enter Your Email Address"
+          placeholder="Enter your email address"
           onChange={(e) => {
             setEmail(e.target.value);
           }}
+          border="2px"
+          borderColor="#000"
           onFocus={() => setEmailFocus(true)}
           onBlur={() => setEmailFocus(false)}
         />
@@ -244,21 +272,32 @@ const Register = () => {
             padding={1}
             marginTop={3}
             backgroundColor="blue.100"
-            fontSize="xl"
             borderRadius="md"
           >
             <InfoIcon marginTop={1} marginRight={2} marginLeft={1} />
-            <Text fontFamily="Poppin">Must a valid email address.</Text>
+            <Text>Must a valid email address.</Text>
           </Box>
         )}
       </FormControl>
 
+      {/* password */}
       <FormControl id="password" isRequired>
-        <FormLabel>Password</FormLabel>
+        <Box display="flex" alignItems="center">
+          <FormLabel>Password</FormLabel>
+          {password &&
+            (validPassword ? (
+              <CheckIcon color="green.500" paddingBottom={1} />
+            ) : (
+              <CloseIcon color="red.500" paddingBottom={1} />
+            ))}
+        </Box>
+
         <InputGroup size="md">
           <Input
             type={passwordShow ? "text" : "password"}
             placeholder="Enter password"
+            border="2px"
+            borderColor="#000"
             onChange={(e) => {
               setPassword(e.target.value);
             }}
@@ -266,8 +305,13 @@ const Register = () => {
             onBlur={() => setPasswordFocus(false)}
           />
           <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={handlePasswordShowClick}>
-              {passwordShow ? "Hide" : "Show"}
+            <Button
+              h="1.75rem"
+              size="sm"
+              backgroundColor="#FFF"
+              onClick={handlePasswordShowClick}
+            >
+              {passwordShow ? <ViewOffIcon /> : <ViewIcon />}
             </Button>
           </InputRightElement>
         </InputGroup>
@@ -277,28 +321,38 @@ const Register = () => {
             padding={1}
             marginTop={3}
             backgroundColor="blue.100"
-            fontSize="xl"
             borderRadius="md"
           >
             <InfoIcon marginTop={1} marginRight={2} marginLeft={1} />
-            <Text fontFamily="Poppin">
+            <Text>
               8 to 24 characters.
               <br />
-              Must include uppercase and lowercase letters, a number and a
-              special character.
+              Must include uppercase and lowercase letters,
               <br />
-              Allowed special characters:!@#$%
+              a number and a special character.
+              <br />
+              Allowed special characters: !@#$%
             </Text>
           </Box>
         )}
       </FormControl>
 
       <FormControl id="confirm-password" isRequired>
-        <FormLabel>Confirm Password</FormLabel>
+        <Box display="flex" alignItems="center">
+          <FormLabel>Confirm password</FormLabel>
+          {confirmPassword &&
+            (validMatch ? (
+              <CheckIcon color="green.500" paddingBottom={1} />
+            ) : (
+              <CloseIcon color="red.500" paddingBottom={1} />
+            ))}
+        </Box>
         <InputGroup size="md">
           <Input
             type={passwordConfirmShow ? "text" : "password"}
-            placeholder="Enter Password Again"
+            placeholder="Enter password again"
+            border="2px"
+            borderColor="#000"
             onChange={(e) => {
               setConfirmPassword(e.target.value);
             }}
@@ -306,8 +360,12 @@ const Register = () => {
             onBlur={() => setConfirmPasswordFocus(false)}
           />
           <InputRightElement width="4.5rem">
-            <Button size="sm" onClick={handlePasswordConfirmShowClick}>
-              {passwordConfirmShow ? "Hide" : "Show"}
+            <Button
+              size="sm"
+              backgroundColor="#FFF"
+              onClick={handlePasswordConfirmShowClick}
+            >
+              {passwordConfirmShow ? <ViewOffIcon /> : <ViewIcon />}
             </Button>
           </InputRightElement>
         </InputGroup>
@@ -317,22 +375,21 @@ const Register = () => {
             padding={1}
             marginTop={3}
             backgroundColor="blue.100"
-            fontSize="xl"
             borderRadius="md"
           >
             <InfoIcon marginTop={1} marginRight={2} marginLeft={1} />
-            <Text fontFamily="Poppin">
-              Must match the first password input field.
-            </Text>
+            <Text>Must match the first password input field.</Text>
           </Box>
         )}
       </FormControl>
 
       <FormControl id="avatar">
-        <FormLabel>Upload Your Avatar</FormLabel>
+        <FormLabel>Upload your avatar</FormLabel>
         <Input
           type="file"
           p={1.5}
+          border="2px"
+          borderColor="#000"
           onChange={(e) => {
             postDetials(e.target.files[0]);
           }}
@@ -343,11 +400,36 @@ const Register = () => {
         isLoading={avatarLoading}
         loadingText="Loading"
         onClick={handleSubmit}
-        backgroundColor="blue.100"
-        disabled={!validName || !validEmail || !validPassword || !validMatch}
+        backgroundColor="#000"
+        color="#fff"
+        // disabled={!validName || !validEmail || !validPassword || !validMatch}
       >
-        Sign Up
+        Create account
       </Button>
+      <Button
+        width="100%"
+        loadingText="Loading"
+        backgroundColor="#fff"
+        border="2px"
+        borderColor="#000"
+        leftIcon={<GoogleIcon />}
+      >
+        Sign in with Google
+      </Button>
+
+      <Box display="flex">
+        <Text fontSize="sm" marginRight={1}>
+          Already have an account?
+        </Text>
+        <Text
+          fontSize="sm"
+          cursor="pointer"
+          as="ins"
+          onClick={() => setCurrentPage("login")}
+        >
+          Log in
+        </Text>
+      </Box>
     </VStack>
   );
 };

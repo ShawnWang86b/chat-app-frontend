@@ -17,9 +17,11 @@ import {
 import Login from "../Components/Auth/Login";
 import Register from "../Components/Auth/Register.tsx";
 import { useHistory } from "react-router";
+import { ChatState } from "../Context/ChatProvider";
 
 const HomePage = () => {
   const history = useHistory();
+  const { currentPage } = ChatState();
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("userInfo"));
@@ -37,7 +39,8 @@ const HomePage = () => {
         justifyContent="center"
         alignItems="center"
       >
-        <Login />
+        {currentPage === "login" && <Login />}
+        {currentPage === "register" && <Register />}
       </Box>
 
       <Box
@@ -49,7 +52,8 @@ const HomePage = () => {
         borderLeftColor="#000"
       >
         <Image
-          src="https://res.cloudinary.com/dmfmwtxje/image/upload/v1673607358/colorComposition_v4yeay.jpg"
+          height="90%"
+          src="https://res.cloudinary.com/dmfmwtxje/image/upload/v1673618933/signin_img_sts3ee.png"
           alt="colorComposition"
         />
       </Box>
