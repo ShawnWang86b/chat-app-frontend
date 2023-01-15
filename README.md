@@ -65,7 +65,7 @@ const ENDPOINT = "http://localhost:5000";
 
 ### Plan to Improved in V2
 
-**Structure**
+**Overview**
 
 1. rewrite by TS
 2. refactor the Axios get and post method, too many repeat code, such as config
@@ -75,20 +75,46 @@ const ENDPOINT = "http://localhost:5000";
 
 **New Features**
 
-1. [ ] users can send image (folders if possible), better draggable.
-2. [ ] show users state (green point online, red point off line)
-3. [ ] chat message need to show send time
-4. [ ] video, may use WebRTC
-5. [ ] notifications, this should be finished in V1 but failed
-6. [ ] find a new library to replace `react-scrollable-feed` and `Lotties-react`
-7. [ ] add a read and unread mark for every message, actually not necessary just for learning purpose.
-8. [ ] users may have a button to check all media file, for example, others send image and file.
-9. [ ] add dark and light theme
-10. [ ] forgot password, email reset password
-11. [ ] remember me in the sign in page
-12. [ ] sign in, sign up in Google
-13. [✓] sign up helper focus info
-14. [✓] sign in UI design and build
-15. [✓] sign up UI design and build
-16. [✓] add feedback icon x,✓ when input
-17. [✓] add Regex for sign up input
+**Register&login**
+
+1. [ ] forgot password, email reset password
+2. [ ] remember me in the sign in page
+3. [ ] sign in, sign up in Google
+4. [✓] sign up helper focus info
+5. [✓] sign in UI design and build
+6. [✓] sign up UI design and build
+7. [✓] add feedback icon x,✓ when input
+8. [✓] add Regex for sign up input
+
+**Chat General**
+
+1. [ ] chat pages UI
+2. [ ] users can send image
+3. [ ] users can send emoji (how to add emoji under passed messages?)
+4. [ ] chat message need to show send time
+5. [ ] video, use WebRTC
+6. [ ] change color, e.g.count messages number, how many messages haven't read (low priority)\
+
+**Chat Details**
+
+1. [ ] add chat details section in chatPage
+2. [ ] render all shared photo chat details section
+3. [ ] render all shared photo chat details section
+4. [ ] add search in conversation
+5. [ ] find a new library to replace `react-scrollable-feed` and `Lotties-react`
+
+**Notifications**
+
+1. [ ] notifications
+2. [ ] add a read and unread mark for every message (low priority)
+3. [ ] add unread message quantity for each friend in the chat list
+4. [ ] add latest message time
+
+**Profile**
+
+1. [ ] change personal info
+2. [ ] change personal avatar
+
+**User state**
+
+1. [ ] show users online or offline

@@ -5,6 +5,7 @@ import {
   Box,
   Text,
   Button,
+  FormLabel,
   Checkbox,
   useToast,
   InputGroup,
@@ -87,8 +88,9 @@ const Login = () => {
       </Text>
 
       <FormControl id="email" isRequired>
+        <FormLabel>Email</FormLabel>
         <Input
-          placeholder="Enter your email address"
+          placeholder="Enter your email"
           border="2px"
           borderColor="#000"
           onChange={(e) => {
@@ -98,6 +100,7 @@ const Login = () => {
       </FormControl>
 
       <FormControl id="password" isRequired>
+        <FormLabel>Password</FormLabel>
         <InputGroup size="md">
           <Input
             type={passwordShow ? "text" : "password"}
@@ -125,7 +128,11 @@ const Login = () => {
           <Text fontSize="sm">Remember me</Text>
         </Checkbox>
 
-        <Text fontSize="sm" cursor="pointer">
+        <Text
+          fontSize="sm"
+          cursor="pointer"
+          onClick={() => setCurrentPage("forgotPassword")}
+        >
           Forgot password
         </Text>
       </Box>

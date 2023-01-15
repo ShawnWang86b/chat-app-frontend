@@ -16,6 +16,7 @@ import {
 } from "@chakra-ui/react";
 import Login from "../Components/Auth/Login";
 import Register from "../Components/Auth/Register.tsx";
+import ForgotPassword from "../Components/Auth/ForgotPassword.tsx";
 import { useHistory } from "react-router";
 import { ChatState } from "../Context/ChatProvider";
 
@@ -41,6 +42,7 @@ const HomePage = () => {
       >
         {currentPage === "login" && <Login />}
         {currentPage === "register" && <Register />}
+        {currentPage === "forgotPassword" && <ForgotPassword />}
       </Box>
 
       <Box

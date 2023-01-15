@@ -247,7 +247,7 @@ const Register = () => {
       {/* Email */}
       <FormControl id="email" isRequired>
         <Box display="flex" alignItems="center">
-          <FormLabel>Email address</FormLabel>
+          <FormLabel>Email</FormLabel>
           {email &&
             (validEmail ? (
               <CheckIcon color="green.500" paddingBottom={1} />
@@ -257,7 +257,7 @@ const Register = () => {
         </Box>
 
         <Input
-          placeholder="Enter your email address"
+          placeholder="Enter your email"
           onChange={(e) => {
             setEmail(e.target.value);
           }}
@@ -384,7 +384,7 @@ const Register = () => {
       </FormControl>
 
       <FormControl id="avatar">
-        <FormLabel>Upload your avatar</FormLabel>
+        <FormLabel>Upload avatar</FormLabel>
         <Input
           type="file"
           p={1.5}
