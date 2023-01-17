@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from "react";
 import {
   Text,
   Box,
-  Flex,
   VStack,
   FormControl,
   FormLabel,
@@ -11,7 +10,6 @@ import {
   Button,
   InputGroup,
   InputRightElement,
-  Tooltip,
   useToast,
 } from "@chakra-ui/react";
 import axios from "../../config/axios";
@@ -24,15 +22,14 @@ import {
   ViewOffIcon,
 } from "@chakra-ui/icons";
 import { ReactComponent as GoogleIcon } from "../../assets/google.svg";
-import { ChatState } from "../../Context/ChatProvider";
-
+import { useUserData } from "../../hooks/useUserData";
 export const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 export const PWD_REGEX =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 export const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 export const REGISTER_URL = "/api/user";
 
-const Register = () => {
+const Register = ({ setCurrentPage }) => {
   const nameRef = useRef<HTMLInputElement | null>(null);
 
   const [passwordShow, setPasswordShow] = useState(false);
@@ -61,9 +58,9 @@ const Register = () => {
   //Avatar
   const [avatar, setAvatar] = useState("");
   const [avatarLoading, setAvatarLoading] = useState(false);
-  const { setCurrentPage } = ChatState();
   const toast = useToast();
   const history = useHistory();
+  const { setUserData } = useUserData();
 
   useEffect(() => {
     nameRef.current?.focus();
@@ -181,7 +178,7 @@ const Register = () => {
         isClosable: true,
         position: "bottom",
       });
-      localStorage.setItem("userInfo", JSON.stringify(data));
+      setUserData(data);
       setAvatarLoading(false);
       history.push("/chats");
     } catch (error) {

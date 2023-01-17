@@ -6,16 +6,17 @@ import { AddIcon } from "@chakra-ui/icons";
 import ChatsLoading from "./ChatsLoading";
 import GroupChatModal from "./GroupChatModal";
 import { getSender } from "../config/ChatLogics";
+import { useUserData } from "../hooks/useUserData";
 const MyChats = ({ fetchAgain }) => {
-  const { selectedChat, setSelectedChat, user, setUser, chats, setChats } =
-    ChatState();
+  const { selectedChat, setSelectedChat, chats, setChats } = ChatState();
   const [loggedUser, setLoggedUser] = useState();
+  const { userData } = useUserData();
   const toast = useToast();
   const fetchChats = async () => {
     try {
       const config = {
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${userData.token}`,
         },
       };
       const { data } = await axios.get("/api/chat", config);
@@ -33,7 +34,7 @@ const MyChats = ({ fetchAgain }) => {
   };
 
   useEffect(() => {
-    setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
+    setLoggedUser(userData);
     fetchChats();
   }, [fetchAgain]);
 

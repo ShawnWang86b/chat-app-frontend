@@ -1,48 +1,40 @@
-import React, { useEffect } from "react";
-import {
-  Box,
-  Stack,
-  Flex,
-  Container,
-  Image,
-  Text,
-  Tab,
-  Tabs,
-  TabList,
-  TabPanels,
-  TabPanel,
-  Center,
-  Divider,
-} from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import { Box, Container, Image } from "@chakra-ui/react";
 import Login from "../Components/Auth/Login";
 import Register from "../Components/Auth/Register.tsx";
 import ForgotPassword from "../Components/Auth/ForgotPassword.tsx";
 import { useHistory } from "react-router";
-import { ChatState } from "../Context/ChatProvider";
-
+import EmailNotify from "../Components/Auth/EmailNotify.tsx";
+import { useUserData } from "../hooks/useUserData";
 const HomePage = () => {
   const history = useHistory();
-  const { currentPage } = ChatState();
+  const [currentPage, setCurrentPage] = useState("login");
+  const { userData } = useUserData();
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("userInfo"));
-
-    if (user) {
+    if (userData) {
       history.push("/chats");
     }
   }, [history]);
 
   return (
     <Container display="flex" maxW="7xl" height="100%">
+      {/* {setCurrentPage("Login")} */}
       <Box
         width="50%"
         display="flex"
         justifyContent="center"
         alignItems="center"
       >
-        {currentPage === "login" && <Login />}
-        {currentPage === "register" && <Register />}
-        {currentPage === "forgotPassword" && <ForgotPassword />}
+        {currentPage === "login" && <Login setCurrentPage={setCurrentPage} />}
+        {currentPage === "register" && (
+          <Register setCurrentPage={setCurrentPage} />
+        )}
+        {currentPage === "forgotPassword" && (
+          <ForgotPassword setCurrentPage={setCurrentPage} />
+        )}
+        {/* {currentPage === "resetPassword" && <ResetPassword />} */}
+        {currentPage === "email-notification" && <EmailNotify />}
       </Box>
 
       <Box
@@ -62,4 +54,5 @@ const HomePage = () => {
     </Container>
   );
 };
+
 export default HomePage;

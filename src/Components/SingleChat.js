@@ -18,6 +18,7 @@ import { io } from "socket.io-client";
 import typingAnimation from "../animations/typing.json";
 import { getSender, getSenderFull } from "../config/ChatLogics";
 import { useLottie } from "lottie-react";
+import { useUserData } from "../hooks/useUserData";
 
 const ENDPOINT = "http://localhost:5000";
 //const ENDPOINT = "https://shawns-chat-app-api.onrender.com";
@@ -30,6 +31,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [socketConnected, setSocketConnected] = useState(false);
   const [typing, setTyping] = useState(false);
   const [istyping, setIsTyping] = useState(false);
+  const { userData } = useUserData();
+
   const { selectedChat, setSelectedChat, user, notification, setNotification } =
     ChatState();
   const toast = useToast();
@@ -44,7 +47,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   useEffect(() => {
     socket = io(ENDPOINT);
-    socket.emit("setup", user);
+    socket.emit("setup", userData);
     socket.on("connected", () => setSocketConnected(true));
     socket.on("typing", () => {
       setIsTyping(true);

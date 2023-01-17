@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import {
   VStack,
   Text,
@@ -9,11 +9,10 @@ import {
   Button,
   useToast,
 } from "@chakra-ui/react";
-import { ChatState } from "../../Context/ChatProvider";
 import { useHistory } from "react-router";
 import axios from "../../config/axios";
-const ForgotPassword = () => {
-  const { setCurrentPage } = ChatState();
+
+const ForgotPassword = ({ setCurrentPage }) => {
   const [email, setEmail] = useState();
   const [loading, setLoading] = useState(false);
 
@@ -24,7 +23,7 @@ const ForgotPassword = () => {
     setLoading(true);
     if (!email) {
       toast({
-        title: "Please fill all the Fields",
+        title: "Please fill email",
         status: "warning",
         duration: 5000,
         isClosable: true,
@@ -40,18 +39,21 @@ const ForgotPassword = () => {
           "Content-type": "application/json",
         },
       };
-      const { data } = await axios.post("/api/user/login", { email }, config);
+      const { data } = await axios.post(
+        "/api/user/forget-password",
+        { email },
+        config
+      );
       toast({
-        title: "Login Successful",
+        title: "Send Successful",
         status: "success",
         duration: 5000,
         isClosable: true,
         position: "bottom",
       });
-      localStorage.setItem("userInfo", JSON.stringify(data));
-      //   setUser(data);
+      setCurrentPage("email-notification");
       setLoading(false);
-      history.push("/chats");
+      console.log("data", data);
     } catch (error) {
       toast({
         title: "Error Occurred",
@@ -71,7 +73,7 @@ const ForgotPassword = () => {
         Forgot password?
       </Text>
       <Text color="gray.600">
-        No Worries, we'll send you reset instructions.
+        No worries, we'll send you reset instructions.
       </Text>
 
       <FormControl id="email" isRequired>

@@ -29,18 +29,17 @@ import ChatsLoading from "./ChatsLoading";
 import UserListItem from "../Components/UserListItem";
 import axios from "../config/axios";
 import { getSender } from "../../src/config/ChatLogics";
-
+import { useUserData } from "../hooks/useUserData";
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState();
   const history = useHistory();
+  const { userData } = useUserData();
   const {
     selectedChat,
     setSelectedChat,
-    user,
-    setUser,
     chats,
     setChats,
     notification,
@@ -73,7 +72,7 @@ const SideDrawer = () => {
 
       const config = {
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${userData.token}`,
         },
       };
       const { data } = await axios.get(`/api/user?search=${search}`, config);
@@ -98,7 +97,7 @@ const SideDrawer = () => {
       const config = {
         headers: {
           "Content-type": "application/json",
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${userData.token}`,
         },
       };
       const { data } = await axios.post(`/api/chat`, { userId }, config);
@@ -161,7 +160,10 @@ const SideDrawer = () => {
                 >
                   {notif.chat.isGroupChat
                     ? `New Message in ${notif.chat.chatName}`
-                    : `New Message from ${getSender(user, notif.chat.users)}`}
+                    : `New Message from ${getSender(
+                        userData,
+                        notif.chat.users
+                      )}`}
                 </MenuItem>
               ))}
             </MenuList>
@@ -171,12 +173,12 @@ const SideDrawer = () => {
               <Avatar
                 size="sm"
                 cursor="pointer"
-                name={user.name}
-                src={user.avatar}
+                name={userData.name}
+                src={userData.avatar}
               />
             </MenuButton>
             <MenuList>
-              <ProfileModal user={user}>
+              <ProfileModal user={userData}>
                 <MenuItem>My Profile</MenuItem>
               </ProfileModal>
               <MenuDivider />

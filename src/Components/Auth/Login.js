@@ -14,20 +14,18 @@ import {
 import axios from "../../config/axios";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { ChatState } from "../../Context/ChatProvider";
 import { ReactComponent as GoogleIcon } from "../../assets/google.svg";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-
-const Login = () => {
+import { useUserData } from "../../hooks/useUserData";
+const Login = ({ setCurrentPage }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
   const [passwordShow, setPasswordShow] = useState(false);
+  const { setUserData } = useUserData();
 
   const toast = useToast();
   const history = useHistory();
-
-  const { setUser, setCurrentPage } = ChatState();
 
   const handlePasswordShowClick = () => {
     setPasswordShow(!passwordShow);
@@ -64,8 +62,7 @@ const Login = () => {
         isClosable: true,
         position: "bottom",
       });
-      localStorage.setItem("userInfo", JSON.stringify(data));
-      setUser(data);
+      setUserData(data);
       setLoading(false);
       history.push("/chats");
     } catch (error) {
@@ -132,6 +129,7 @@ const Login = () => {
           fontSize="sm"
           cursor="pointer"
           onClick={() => setCurrentPage("forgotPassword")}
+          _hover={{ textDecoration: "underline" }}
         >
           Forgot password
         </Text>
