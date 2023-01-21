@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useUserData } from "../hooks/useUserData";
 const ChatContext = createContext();
 
@@ -8,13 +8,13 @@ const ChatProvider = ({ children }) => {
   const [notification, setNotification] = useState([]);
   const [chats, setChats] = useState();
   const { userData } = useUserData();
-  const history = useHistory();
+  const navigate = useNavigate();
   useEffect(() => {
     if (!userData) {
-      history.push("/");
+      navigate("/");
       return;
     }
-  }, [userData, history]);
+  }, [userData, navigate]);
 
   return (
     <ChatContext.Provider

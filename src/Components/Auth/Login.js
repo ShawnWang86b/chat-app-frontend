@@ -13,10 +13,12 @@ import {
 } from "@chakra-ui/react";
 import axios from "../../config/axios";
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ReactComponent as GoogleIcon } from "../../assets/google.svg";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useUserData } from "../../hooks/useUserData";
+import { useGoogleLogin } from "@react-oauth/google";
+
 const Login = ({ setCurrentPage }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -25,8 +27,7 @@ const Login = ({ setCurrentPage }) => {
   const { setUserData } = useUserData();
 
   const toast = useToast();
-  const history = useHistory();
-
+  const navigate = useNavigate();
   const handlePasswordShowClick = () => {
     setPasswordShow(!passwordShow);
   };
@@ -51,7 +52,7 @@ const Login = ({ setCurrentPage }) => {
         },
       };
       const { data } = await axios.post(
-        "/api/user/login",
+        "/api/auth/login",
         { email, password },
         config
       );
@@ -64,7 +65,7 @@ const Login = ({ setCurrentPage }) => {
       });
       setUserData(data);
       setLoading(false);
-      history.push("/chats");
+      navigate("/chats");
     } catch (error) {
       toast({
         title: "Error Occurred",
@@ -77,6 +78,10 @@ const Login = ({ setCurrentPage }) => {
       setLoading(false);
     }
   };
+  //Google login use costume button
+  // const handleGoogleLoginClick = useGoogleLogin({
+  //   onSuccess: (tokenResponse) => console.log(tokenResponse),
+  // });
 
   return (
     <VStack spacing="1em" width="60%">
@@ -150,7 +155,7 @@ const Login = ({ setCurrentPage }) => {
         isLoading={loading}
         loadingText="Loading"
         backgroundColor="#fff"
-        onClick={handleSubmitClick}
+        // onClick={() => handleGoogleLoginClick()}
         border="2px"
         borderColor="#000"
         leftIcon={<GoogleIcon />}

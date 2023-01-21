@@ -3,19 +3,19 @@ import { Box, Container, Image } from "@chakra-ui/react";
 import Login from "../Components/Auth/Login";
 import Register from "../Components/Auth/Register.tsx";
 import ForgotPassword from "../Components/Auth/ForgotPassword.tsx";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router-dom";
 import EmailNotify from "../Components/Auth/EmailNotify.tsx";
 import { useUserData } from "../hooks/useUserData";
 const HomePage = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState("login");
   const { userData } = useUserData();
 
   useEffect(() => {
     if (userData) {
-      history.push("/chats");
+      navigate("/chats");
     }
-  }, [history]);
+  }, [navigate]);
 
   return (
     <Container display="flex" maxW="7xl" height="100%">

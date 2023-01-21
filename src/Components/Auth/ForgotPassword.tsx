@@ -9,7 +9,7 @@ import {
   Button,
   useToast,
 } from "@chakra-ui/react";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router-dom";
 import axios from "../../config/axios";
 
 const ForgotPassword = ({ setCurrentPage }) => {
@@ -17,7 +17,7 @@ const ForgotPassword = ({ setCurrentPage }) => {
   const [loading, setLoading] = useState(false);
 
   const toast = useToast();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleSubmitClick = async () => {
     setLoading(true);
@@ -40,7 +40,7 @@ const ForgotPassword = ({ setCurrentPage }) => {
         },
       };
       const { data } = await axios.post(
-        "/api/user/forget-password",
+        "/api/auth/forget-password",
         { email },
         config
       );

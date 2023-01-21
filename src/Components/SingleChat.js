@@ -31,7 +31,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [socketConnected, setSocketConnected] = useState(false);
   const [typing, setTyping] = useState(false);
   const [istyping, setIsTyping] = useState(false);
-  const { userData } = useUserData();
+  const { userData, getUserData } = useUserData();
 
   const { selectedChat, setSelectedChat, user, notification, setNotification } =
     ChatState();
@@ -62,7 +62,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     try {
       const config = {
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${userData.token}`,
         },
       };
 
@@ -94,7 +94,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         const config = {
           headers: {
             "Content-type": "application/json",
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${userData.token}`,
           },
         };
         setNewMessage("");
@@ -183,8 +183,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             />
             {!selectedChat.isGroupChat ? (
               <>
-                {getSender(user, selectedChat.users)}
-                <ProfileModal user={getSenderFull(user, selectedChat.users)} />
+                {getSender(userData, selectedChat.users)}
+                <ProfileModal
+                  user={getSenderFull(userData, selectedChat.users)}
+                />
               </>
             ) : (
               <>

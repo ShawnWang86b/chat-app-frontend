@@ -24,7 +24,7 @@ import {
 import { SearchIcon, ChevronDownIcon, BellIcon } from "@chakra-ui/icons";
 import { ChatState } from "../Context/ChatProvider";
 import ProfileModal from "../Components/ProfileModal";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ChatsLoading from "./ChatsLoading";
 import UserListItem from "../Components/UserListItem";
 import axios from "../config/axios";
@@ -35,7 +35,7 @@ const SideDrawer = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { userData } = useUserData();
   const {
     selectedChat,
@@ -51,7 +51,7 @@ const SideDrawer = () => {
   //Logout
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
-    history.push("/");
+    navigate("/");
   };
 
   //store input users

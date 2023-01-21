@@ -18,14 +18,15 @@ import {
   ViewIcon,
   ViewOffIcon,
 } from "@chakra-ui/icons";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router-dom";
 import axios from "../../config/axios";
+import { useParams } from "react-router-dom";
 
 export const PWD_REGEX =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
-const ResetPassword = (setCurrentPage) => {
-  const [email, setEmail] = useState();
+const ResetPassword = ({ setCurrentPage }) => {
+  const { id, token } = useParams();
   const [loading, setLoading] = useState(false);
 
   const [passwordShow, setPasswordShow] = useState(false);
@@ -41,7 +42,7 @@ const ResetPassword = (setCurrentPage) => {
   const [confirmPasswordFocus, setConfirmPasswordFocus] = useState(false);
 
   const toast = useToast();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setValidPassword(PWD_REGEX.test(password));
@@ -58,7 +59,7 @@ const ResetPassword = (setCurrentPage) => {
 
   const handleSubmitClick = async () => {
     setLoading(true);
-    if (!email) {
+    if (!password || !confirmPassword) {
       toast({
         title: "Please fill all the Fields",
         status: "warning",
@@ -76,9 +77,13 @@ const ResetPassword = (setCurrentPage) => {
           "Content-type": "application/json",
         },
       };
-      const { data } = await axios.post("/api/user/login", { email }, config);
+      const { data } = await axios.put(
+        `/api/auth/reset-password/${id}/${token}`,
+        { password },
+        config
+      );
       toast({
-        title: "Login Successful",
+        title: "Password Reset Successful",
         status: "success",
         duration: 5000,
         isClosable: true,
@@ -87,7 +92,7 @@ const ResetPassword = (setCurrentPage) => {
       // localStorage.setItem("userInfo", JSON.stringify(data));
       //   setUser(data);
       setLoading(false);
-      history.push("/chats");
+      navigate("/chats");
     } catch (error) {
       toast({
         title: "Error Occurred",
@@ -102,7 +107,14 @@ const ResetPassword = (setCurrentPage) => {
   };
 
   return (
-    <VStack spacing="1em" width="60%">
+    <VStack
+      spacing="1em"
+      width="20%"
+      border="2px"
+      borderColor="red.100"
+      display="flex"
+      justifyContent="center"
+    >
       <Text fontSize="3xl" as="b">
         Reset password
       </Text>
@@ -229,7 +241,7 @@ const ResetPassword = (setCurrentPage) => {
           fontSize="sm"
           cursor="pointer"
           as="ins"
-          onClick={() => history.push("/")}
+          onClick={() => navigate("/")}
         >
           log in
         </Text>

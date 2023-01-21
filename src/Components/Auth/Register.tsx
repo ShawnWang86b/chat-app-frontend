@@ -13,7 +13,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import axios from "../../config/axios";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   InfoIcon,
   CheckIcon,
@@ -21,7 +21,6 @@ import {
   ViewIcon,
   ViewOffIcon,
 } from "@chakra-ui/icons";
-import { ReactComponent as GoogleIcon } from "../../assets/google.svg";
 import { useUserData } from "../../hooks/useUserData";
 export const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 export const PWD_REGEX =
@@ -59,7 +58,7 @@ const Register = ({ setCurrentPage }) => {
   const [avatar, setAvatar] = useState("");
   const [avatarLoading, setAvatarLoading] = useState(false);
   const toast = useToast();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { setUserData } = useUserData();
 
   useEffect(() => {
@@ -167,7 +166,7 @@ const Register = ({ setCurrentPage }) => {
         },
       };
       const { data } = await axios.post(
-        "/api/user",
+        "/api/auth",
         { name, email, password, avatar },
         config
       );
@@ -180,7 +179,7 @@ const Register = ({ setCurrentPage }) => {
       });
       setUserData(data);
       setAvatarLoading(false);
-      history.push("/chats");
+      navigate("/chats");
     } catch (error) {
       toast({
         title: "Error Occurred",
@@ -402,16 +401,6 @@ const Register = ({ setCurrentPage }) => {
         // disabled={!validName || !validEmail || !validPassword || !validMatch}
       >
         Create account
-      </Button>
-      <Button
-        width="100%"
-        loadingText="Loading"
-        backgroundColor="#fff"
-        border="2px"
-        borderColor="#000"
-        leftIcon={<GoogleIcon />}
-      >
-        Sign in with Google
       </Button>
 
       <Box display="flex">
